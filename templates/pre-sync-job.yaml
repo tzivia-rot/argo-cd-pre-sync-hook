@@ -1,0 +1,25 @@
+{{- if .Values.preSync.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "yourchart.fullname" . }}-pre-sync-api-check
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+  labels:
+    {{- include "yourchart.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: api-check
+          image: {{ .Values.preSync.image.repository }}:{{ .Values.preSync.image.tag }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              curl -X POST -H "Content-Type: application/json"
+              -d '{"app_name": "{{ .Values.preSync.appName }}"}'
+              {{ .Values.preSync.url }} ||
+              { echo "POST request failed"; exit 1; }
+{{- end }}

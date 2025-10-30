@@ -1,0 +1,7 @@
+preSync:
+  appName: "my-application"
+  enabled: true
+  image:
+    repository: curlimages/curl
+    tag: "8.5.0"
+  url: "http://codearts-gitops-runtime-agent/api/v1/events/gitops-pre-sync-approval"
