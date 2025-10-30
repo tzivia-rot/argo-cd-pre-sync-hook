@@ -1,0 +1,1 @@
+# argo-cd-pre-sync-hook
