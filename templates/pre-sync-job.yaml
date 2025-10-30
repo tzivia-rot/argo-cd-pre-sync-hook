@@ -2,12 +2,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "yourchart.fullname" . }}-pre-sync-api-check
+  name: {{ include "aipresynchook.fullname" . }}-pre-sync-api-check
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
   labels:
-    {{- include "yourchart.labels" . | nindent 4 }}
+    {{- include "aipresynchook.labels" . | nindent 4 }}
 spec:
   template:
     spec:
